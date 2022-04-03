@@ -1,0 +1,16 @@
+Link-1: https://www.youtube.com/watch?v=3c-iBn73dDE
+Link-2: https://www.youtube.com/watch?v=fqMOX6JJhGo
+
+
+# Why using Docker
+
+# what is a docker file / Image
+
+# What is container
+
+# Difference between image and container
+Image is the actual package, it includes the configuration file, the application we want to run and maybe some start scripts.
+Its actually the artifact
+
+A container is actually whats being created after I pull the image to the docker server and start the application. This actually creates the container.
+  
