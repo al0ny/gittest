@@ -5,6 +5,8 @@ Link-2: https://www.youtube.com/watch?v=fqMOX6JJhGo
 # Why using Docker
 
 # what is a docker file / Image
+It's the artifact. It contains the application I want to run, configurations file and maybe some startup scripts.
+It got multiple layers, the application layer (such as mysql) and the base system layer (such as alpine linux - which is very light)
 
 # What is container
 
@@ -12,5 +14,69 @@ Link-2: https://www.youtube.com/watch?v=fqMOX6JJhGo
 Image is the actual package, it includes the configuration file, the application we want to run and maybe some start scripts.
 Its actually the artifact
 
-A container is actually whats being created after I pull the image to the docker server and start the application. This actually creates the container.
-  
+When I run the image it creates the container environment with all layers.  
+
+
+###
+When we fetch / pull an image, it will pull all of that image layers (applications, base system, dependencies, etc.)
+If we fetch another application, or even the same application but different version, and some images layers were already pulled by previous installation - it will not download them again - it will just download the 
+image layers it neds for that specific application.
+
+
+# Differences between Image to container
+ - Container is the running environment for an image. It includes all the needed files and connectivity settgins to allow the application image to run. It has it's own abstraction of the OS environment.
+ 
+ - 
+
+# docker pull <image_name>
+Downloads the image we want(<image_name>) from the images repository (default is DockerHub). by default tag = latest, unless we specify differently. 
+(docker pull postgre:13.6 -> will download the postgres app version 13.6, tag = 13.6)
+
+# docker run <image_name> 
+Starts new container with a command. Check if the image_name exist in our docker repository and if the version is latest (or on the specific version we want).
+If it exsits it ill start a container for that image_name, if not - it will download the relevant version of that image (default is latest) and will run a contianer for it.
+
+# docker run -d <image_name> 
+Starts the application in s detached mode (in the background) - while not occupying the shell.
+
+# docker run -d -p<host_port>:<container_port>
+Will bind the container port to the host port. 
+That way we can run multiple instances of the same image - each on a different host port 
+
+# docker run -d --name <free_text_name>
+The --name flag will set the name we want when running a new container.
+
+# docker images
+Lists all images existed on our docker 
+
+# docker images -q
+Lists all images IDs
+ 
+# docker ps 
+Lists all running containers
+
+# docker ps -a 
+Lists all the containners in the system (running or not)
+
+# docker ps -q
+Lists only CONTAINER_ID of all running containers
+
+# docker kill $(docker ps -q)
+Kills all running containers processes
+
+# docker stop <CONTAINER_ID>
+Stops a running container (not deleting it)
+
+# docker kill $(docker ps -q)
+Stops all running containers
+# docker start <CONTAINER_ID> 
+Starts an existing stopped container
+
+# docker rm $(docker ps -a -q)
+Removes all containers. we can only remove stopped containers, not running containers. 
+
+# docker rmi $(docker images -q)
+Removes all docker images
+
+# docker logs <CONTAINER_ID> / <CONTAINER_NAME>
+Prints the initialization logs of that container on the screen
